@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>2.7.11</version>
+		<relativePath/>
 	</parent>
 	<packaging>pom</packaging>
 	<groupId>com.jmg.checkagro</groupId>
@@ -23,6 +23,9 @@
 
 	<modules>
 		<module>
+			eureka-server
+		</module>
+		<module>
 			api-check
 		</module>
 		<module>
@@ -32,7 +35,5 @@
 			api-provider
 		</module>
 	</modules>
-
-
 
 </project>

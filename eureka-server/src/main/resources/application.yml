@@ -1,5 +1,5 @@
 spring:
   application:
-    name: api-provider
+    name: eureka-server
   config:
     import: configserver:http://localhost:8888

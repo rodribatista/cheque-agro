@@ -1,5 +1,5 @@
 spring:
   application:
-    name: api-provider
+    name: api-check
   config:
     import: configserver:http://localhost:8888

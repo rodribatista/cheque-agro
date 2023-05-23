@@ -9,7 +9,8 @@ spring:
       server:
         git:
           uri: https://github.com/rodribatista/DH_back-E1.git
+          #default-label: "config-server"
           search-paths: config-data
           username: ${GIT_USERNAME}
           password: ${GIT_TOKEN}
-          default-label: "main"
+          force-pull: true

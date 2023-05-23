@@ -1,13 +1,13 @@
 server:
-  port: 8083
+  port: 8082
 spring:
   application:
-    name: api-check
+    name: api-provider
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cheque-agro
-    username: root
-    password: oVtM6J7Qcci!ajTr@K@-NqQ!
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
 
   jpa:
     generate-ddl: true
@@ -22,6 +22,8 @@ spring:
         dialect: org.hibernate.dialect.MySQL55Dialect
         format_sql: true
     show-sql: false
+
+urlCheck: http://localhost:8083
 
 eureka:
   client:

@@ -1,18 +1,24 @@
 package com.jmg.checkagro.customer.client;
+
+import com.jmg.checkagro.customer.config.LoadBalancerConfig;
 import feign.Headers;
-import feign.RequestLine;
 import lombok.*;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.constraints.Size;
 
+@FeignClient(name = "api-customer")
+@LoadBalancerClient(value = "api-customer", configuration = LoadBalancerConfig.class)
 public interface CheckMSClient {
 
     @Headers("Content-Type: application/json")
-    @RequestLine("POST /api/v1/check/customer/register")
+    @PostMapping("/api/v1/check/customer/register")
     void registerCustomer(DocumentRequest request);
 
     @Headers("Content-Type: application/json")
-    @RequestLine("POST /api/v1/check/customer/delete")
+    @PostMapping("/api/v1/check/customer/delete")
     void deleteCustomer(DocumentRequest request);
 
     @AllArgsConstructor

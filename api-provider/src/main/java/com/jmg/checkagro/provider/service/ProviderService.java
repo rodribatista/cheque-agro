@@ -41,7 +41,6 @@ public class ProviderService {
     }
 
     private void deleteProviderInMSCheck(Provider entity) {
-
         checkMSClient.deleteProvider(CheckMSClient.DocumentRequest.builder()
                 .documentType(entity.getDocumentType())
                 .documentValue(entity.getDocumentNumber())

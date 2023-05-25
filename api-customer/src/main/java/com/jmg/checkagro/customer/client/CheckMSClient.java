@@ -9,15 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.constraints.Size;
 
-@FeignClient(name = "api-customer")
+@FeignClient(name = "api-check")
 @LoadBalancerClient(value = "api-customer", configuration = LoadBalancerConfig.class)
 public interface CheckMSClient {
 
-    @Headers("Content-Type: application/json")
     @PostMapping("/api/v1/check/customer/register")
     void registerCustomer(DocumentRequest request);
 
-    @Headers("Content-Type: application/json")
     @PostMapping("/api/v1/check/customer/delete")
     void deleteCustomer(DocumentRequest request);
 

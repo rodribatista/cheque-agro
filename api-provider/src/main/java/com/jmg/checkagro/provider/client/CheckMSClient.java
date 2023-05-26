@@ -1,7 +1,6 @@
 package com.jmg.checkagro.provider.client;
 
 import com.jmg.checkagro.provider.config.LoadBalancerConfig;
-import feign.Headers;
 import lombok.*;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.constraints.Size;
 
 @FeignClient(name = "api-check")
-@LoadBalancerClient(value = "api-provider", configuration = LoadBalancerConfig.class)
+//@LoadBalancerClient(value = "api-provider", configuration = LoadBalancerConfig.class)
 public interface CheckMSClient {
 
     @PostMapping("/api/v1/check/provider/register")

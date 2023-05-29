@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8888}
+  port: 8888
 
 spring:
   application:
@@ -9,7 +9,8 @@ spring:
       server:
         git:
           uri: https://github.com/rodribatista/DH_back-E1.git
+          default-label: "balancer-feign"
           search-paths: config-data
-          username: ${GIT_USERNAME}
-          password: ${GIT_TOKEN}
-          default-label: "main"
+          #username: ${GIT_USERNAME}
+          #password: ${GIT_TOKEN}
+          force-pull: true

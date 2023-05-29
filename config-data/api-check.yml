@@ -3,12 +3,12 @@ server:
 spring:
   application:
     name: api-check
+
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cheque-agro
+    url: jdbc:mysql://localhost:3306/cheque-check
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
-
   jpa:
     generate-ddl: true
     hibernate:
@@ -21,12 +21,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
         format_sql: true
-    show-sql: false
+    show-sql: true
 
 eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
+    registerWithEureka: true
+    fetchRegistry: false
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
 management:
   endpoints:
     web:

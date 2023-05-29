@@ -6,9 +6,6 @@ import com.jmg.checkagro.provider.exception.ProviderException;
 import com.jmg.checkagro.provider.model.Provider;
 import com.jmg.checkagro.provider.repository.ProviderRepository;
 import com.jmg.checkagro.provider.utils.DateTimeUtils;
-import feign.Feign;
-import feign.jackson.JacksonEncoder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,11 +14,11 @@ import javax.transaction.Transactional;
 public class ProviderService {
 
     private final ProviderRepository providerRepository;
-    @Value("${urlCheck}")
-    private String urlCheck;
+    private final CheckMSClient client;
 
-    public ProviderService(ProviderRepository providerRepository) {
+    public ProviderService(ProviderRepository providerRepository, CheckMSClient checkMSClient) {
         this.providerRepository = providerRepository;
+        this.client = checkMSClient;
     }
 
     @Transactional
@@ -37,10 +34,6 @@ public class ProviderService {
     }
 
     private void registerProviderInMSCheck(Provider entity) {
-
-        CheckMSClient client = Feign.builder()
-                .encoder(new JacksonEncoder())
-                .target(CheckMSClient.class, urlCheck);
         client.registerProvider(CheckMSClient.DocumentRequest.builder()
                 .documentType(entity.getDocumentType())
                 .documentValue(entity.getDocumentNumber())
@@ -48,10 +41,6 @@ public class ProviderService {
     }
 
     private void deleteProviderInMSCheck(Provider entity) {
-
-        CheckMSClient client = Feign.builder()
-                .encoder(new JacksonEncoder())
-                .target(CheckMSClient.class, urlCheck);
         client.deleteProvider(CheckMSClient.DocumentRequest.builder()
                 .documentType(entity.getDocumentType())
                 .documentValue(entity.getDocumentNumber())
@@ -77,4 +66,5 @@ public class ProviderService {
     public Provider getById(Long id) throws ProviderException {
         return providerRepository.findByIdAndActive(id, true).orElseThrow(() -> new ProviderException(MessageCode.PROVIDER_NOT_FOUND));
     }
+
 }

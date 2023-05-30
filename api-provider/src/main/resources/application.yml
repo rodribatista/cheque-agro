@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: api-provider
+  config:
+    import: configserver:http://localhost:8888

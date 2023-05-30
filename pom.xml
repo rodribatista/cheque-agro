@@ -37,6 +37,9 @@
 		<module>
 			api-provider
 		</module>
+		<module>
+			api-gateway
+		</module>
 	</modules>
 
 </project>

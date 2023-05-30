@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: customerRoute
+          uri: lb://api-customer
+          predicates:
+            - Path=/api/v1/customer/**
+        - id: providerRoute
+          uri: lb://api-provider
+          predicates:
+            - Path=/api/v1/provider/**
+        - id: checkRoute
+          uri: lb://api-check
+          predicates:
+            - Path=/api/v1/check/**
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: true

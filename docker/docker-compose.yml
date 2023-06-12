@@ -1,17 +1,12 @@
-version: "3.3"
+version: "3.7"
 services:
-  mysql:
-    image: mysql:5.7
+  mysql_cheque-agro:
+    image: mysql:latest
     restart: always
+    container_name: mysql_cheque-agro
     environment:
-      MYSQL_DATABASE: 'checkAgro-dev'
-      MYSQL_USER: 'usr-checkAgro'
-      MYSQL_PASSWORD: 'pwd-checkAgro'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      # <Port exposed> : < MySQL Port running inside container>
       - '3306:3306'
     expose:
-      # Opens port 3306 on the container
       - '3306'
-      # Where our data will be persisted

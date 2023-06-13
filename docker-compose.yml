@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db_customer:
+    container_name: db_customer
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    volumes:
+      - ./docker/db_customer:/var/lib/mysql
+    ports:
+      - '3307:3306'
+    restart: always
+  db_provider:
+    container_name: db_provider
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    volumes:
+      - ./docker/db_provider:/var/lib/mysql
+    ports:
+      - '3308:3306'
+    restart: always
+  db_check:
+    depends_on:
+      - db_customer
+      - db_provider
+    container_name: db_check
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    volumes:
+      - ./docker/db_check:/var/lib/mysql
+    ports:
+      - '3309:3306'
+    restart: always
+  admin_mysql:
+    depends_on:
+      - db_customer
+      - db_provider
+      - db_check
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    environment:
+      - PMA_ARBITRARY=1
+    ports:
+      - '3306:80'
+    restart: always
+
+volumes:
+  db_customer:
+  db_provider:
+  db_check:

@@ -6,7 +6,7 @@ spring:
 
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cheque-check
+    url: jdbc:mysql://localhost:3309/db_check
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
   jpa:

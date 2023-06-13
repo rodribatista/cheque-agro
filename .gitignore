@@ -31,4 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
-/api-check/cheque.pdf
+
+### PROJECT ###
+docker/
+*.pdf

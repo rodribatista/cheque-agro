@@ -4,6 +4,9 @@ spring:
   application:
     name: api-check
 
+  zipkin:
+    base-url: http://localhost:9411
+
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3309/db_check

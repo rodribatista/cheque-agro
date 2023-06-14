@@ -46,6 +46,19 @@ services:
     ports:
       - '3306:80'
     restart: always
+  zipkin_server:
+    depends_on:
+      - storage-aux-container
+    container_name: zipkin_server
+    image: openzipkin/zipkin-slim
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - '9411:9411'
+    restart: always
+  storage-aux-container:
+    image: busybox:1.31.0
+    container_name: storage-aux-container
 
 volumes:
   db_customer:

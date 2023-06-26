@@ -6,6 +6,8 @@ import com.jmg.checkagro.provider.exception.ProviderException;
 import com.jmg.checkagro.provider.model.Provider;
 import com.jmg.checkagro.provider.repository.ProviderRepository;
 import com.jmg.checkagro.provider.utils.DateTimeUtils;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,12 +34,17 @@ public class ProviderService {
         registerProviderInMSCheck(entity);
         return entity.getId();
     }
-
+    @Retry(name = "retryRegisterProvider")
+    @CircuitBreaker(name = "registerProvider", fallbackMethod = "registerProviderInMSCheckFallback")
     private void registerProviderInMSCheck(Provider entity) {
         client.registerProvider(CheckMSClient.DocumentRequest.builder()
                 .documentType(entity.getDocumentType())
                 .documentValue(entity.getDocumentNumber())
                 .build());
+    }
+
+    public void registerProviderInMSCheckFallback(Provider entity, Throwable exception) throws Exception {
+        throw new Exception("Circuit Breaker - No se puede registrar un proveedor en este momento.");
     }
 
     private void deleteProviderInMSCheck(Provider entity) {

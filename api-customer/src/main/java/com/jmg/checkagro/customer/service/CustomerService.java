@@ -6,6 +6,8 @@ import com.jmg.checkagro.customer.exception.MessageCode;
 import com.jmg.checkagro.customer.model.Customer;
 import com.jmg.checkagro.customer.repository.CustomerRepository;
 import com.jmg.checkagro.customer.utils.DateTimeUtils;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,11 +35,17 @@ public class CustomerService {
         return entity.getId();
     }
 
+    @Retry(name = "retryRegisterCustomer")
+    @CircuitBreaker(name = "registerCustomer", fallbackMethod = "registerCustomerInMSCheckFallback")
     private void registerCustomerInMSCheck(Customer entity) {
         client.registerCustomer(CheckMSClient.DocumentRequest.builder()
                 .documentType(entity.getDocumentType())
                 .documentValue(entity.getDocumentNumber())
                 .build());
+    }
+
+    public void registerCustomerInMSCheckFallback(Customer entity, Throwable exception) throws Exception {
+        throw new Exception("Circuit Breaker - No se puede registrar un cliente en este momento.");
     }
 
     private void deleteCustomerInMSCheck(Customer entity) {
